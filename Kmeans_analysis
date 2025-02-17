@@ -1,0 +1,34 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+
+# Load the synthetic data
+data = pd.read_csv("synthetic_data_csv.csv")
+
+# Select features for clustering (you can modify this)
+features = ['eo', 'Sn', 'kni', 'Z']
+X = data[features]
+
+# Standardize the data (K-Means performs better with scaled data)
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# Choose number of clusters (try k=3 to start)
+k = 3
+kmeans = KMeans(n_clusters=k, random_state=42)
+data['Cluster'] = kmeans.fit_predict(X_scaled)
+
+# Plot clusters (kf vs. kccf as an example)
+plt.figure(figsize=(10,8))
+plt.scatter(data['Sn'], data['kf'], c=data['Cluster'], cmap='plasma', alpha=0.6)
+plt.xlabel("Sn")
+plt.ylabel("kf")
+plt.title("K-Means Clustering of Fracture Permeability Data")
+plt.colorbar(label="Cluster")
+plt.show()
+
+# Save the clustered data
+data.to_csv("kmeans_clustered_data.csv", index=False)
+print("K-Means clustering complete. Results saved to 'kmeans_clustered_data.csv'.")

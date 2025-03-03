@@ -1,1 +1,1 @@
-### Clustering analysis of the "Barton-Bandis" fracture permeability model. Python. 
+A Python program to generate large synthetic datasets based on fracture permeability model equations. It also includes the implementation of an "Elbow Method" module to determine the optimal number of clusters, followed by K-Means clustering analysis to identify patterns in the data.
